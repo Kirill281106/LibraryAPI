@@ -1,0 +1,8 @@
+# .gitignore for .NET projects
+
+# Build outputs
+bin/
+obj/
+.vs/
+*.user
+*.user
