@@ -6,7 +6,7 @@ using LibraryAPI.IService.Interfaces;
 using LibraryAPI.DTOs.BookDTO;
 using System.Reflection;
 
-namespace LibraryAPI.Service.Classes
+namespace LibraryAPI.Service.Interfaces
 {
     class AuthorService:IAuthorService
     {

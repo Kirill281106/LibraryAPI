@@ -22,8 +22,15 @@ namespace LibraryAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetBooks()
         {
-            var books = await _bookService.GetAllBooks();
-            return Ok(books);
+            try
+            {
+                var books = await _bookService.GetAllBooks();
+                return Ok(books);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500);
+            }
         }
 
         [HttpGet("{id}")]
@@ -45,10 +52,10 @@ namespace LibraryAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateBook(int id, UpdateBookDTO crateBookDTO)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             var ansver = await _bookService.UpdateBook(id, crateBookDTO);
-            if(ansver==true)
+            if (ansver == true)
                 return NoContent();
             return NotFound();
         }
@@ -59,6 +66,14 @@ namespace LibraryAPI.Controllers
             if (ansver == true)
                 return NoContent();
             return NotFound();
+        }
+        [HttpHead("{id}")]
+        public async Task<IActionResult> HeadBook(int id)
+        {
+            var book = await _bookService.GetBookById(id);
+            if (book == null)
+                return NotFound();
+            return Ok();
         }
     }
 }

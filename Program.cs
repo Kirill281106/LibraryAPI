@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using LibraryAPI.DB;
 using LibraryAPI.Service.Classes;
 using LibraryAPI.IService.Interfaces;
+using LibraryAPI.Service.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
