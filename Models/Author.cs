@@ -2,7 +2,7 @@
 
 namespace LibraryAPI.Models
 {
-    internal class Author
+    public class Author
     {
         [Key]
         public int Id { get; set; }

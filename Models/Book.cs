@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LibraryAPI.Models
 {
-    internal class Book
+    public class Book
     {
         [Key]
         public int Id { get; set; }

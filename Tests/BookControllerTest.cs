@@ -2,6 +2,7 @@
 using LibraryAPI.DTOs.AuthorDTO;
 using LibraryAPI.DTOs.BookDTO;
 using LibraryAPI.IService.Interfaces;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
@@ -154,7 +155,7 @@ namespace LibraryAPI.Tests
             var book = new UpdateBookDTO
             {
                 Title = "Война и мир (обновлено)",
-                Year = 1870,
+                Year = 1870, 
                 Genre = "Роман",
                 AuthorId = 1
             };
@@ -165,26 +166,18 @@ namespace LibraryAPI.Tests
             var okResult = Assert.IsType<NotFoundResult>(result);
         }
         // удаление проверил
-        [Fact]
-        public async Task DeleteBook_Test()
+        [Theory]
+        [InlineData(2,true)]
+        [InlineData(6, false)]
+        public async Task DeleteBook_Test(int id, bool answer)
         {
-            int id = 111;
-            _mockBookService.Setup(s => s.DeleteBook(id)).ReturnsAsync(true);
+            _mockBookService.Setup(s => s.DeleteBook(id)).ReturnsAsync(answer);
 
             var result1 = await _bookController.DeleteBook(id);
-
-            var okResult = Assert.IsType<NoContentResult>(result1);
-        }
-        [Fact]
-        public async Task DeleteBook_WhenNotFound_Test()
-        {
-            int id = 111;
-
-            _mockBookService.Setup(s => s.DeleteBook(id)).ReturnsAsync(false);
-
-            var result2 = await _bookController.DeleteBook(id);
-
-            var NotResult = Assert.IsType<NotFoundResult>(result2);
+            if (answer)
+                Assert.IsType<NoContentResult>(result1);
+            else
+                Assert.IsType<NotFoundResult>(result1);
         }
     }
 }
